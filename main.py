@@ -10,24 +10,36 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+# from langchain_community.chains import 
 from langchain_community.chat_models import ChatOllama
 from langchain_chroma import Chroma
 from hugchat import hugchat
 from hugchat.login import Login
 import dotenv
+from utils import HuggingChat
+from langchain import PromptTemplate
 
 dotenv.load_dotenv()
 
 
 class GradioApp:
     def __init__(self):
-        self.llm = ChatOllama(model="phi3:3.8b", base_url="http://localhost:11434", num_gpu=32)
-        hf_email = os.getenv("HF_EMAIL")
-        hf_pass = os.getenv("HF_PASS")
-        sign = Login(hf_email, hf_pass)
-        cookies = sign.login()
-        sign.saveCookies()
-        self.llm = hugchat.ChatBot(cookies=cookies.get_dict())
+        # self.llm = ChatOllama(model="phi3:3.8b", base_url="http://localhost:11434", num_gpu=32)
+        
+
+        template = """
+        You are a helpful health assistant. These Human will ask you a questions about their pregnancy health.
+        Use following piece of context to answer the question.
+        If you don't know the answer, just say you don't know.
+        Keep the answer within 2 sentences and concise.
+
+        Context: {context}
+        Question: {question}
+        Answer:
+
+        """
+
+        self.llm = HuggingChat(email = os.getenv("HF_EMAIL") , psw = os.getenv("HF_PASS") )
         self.chain = (self.llm | StrOutputParser())
 
     def user(self,user_message, history):
