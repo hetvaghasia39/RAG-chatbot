@@ -2,8 +2,8 @@ import gradio as gr
 import json
 import os
 import shutil
-import magic
-import ollama
+# import magic
+# import ollama
 from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from langchain_community.vectorstores.qdrant import Qdrant
 from langchain_core.runnables import RunnablePassthrough
@@ -22,8 +22,12 @@ dotenv.load_dotenv()
 class GradioApp:
     def __init__(self):
         self.llm = ChatOllama(model="phi3:3.8b", base_url="http://localhost:11434", num_gpu=32)
-        # hf_email = 
-        # self.llm = hugchat.ChatBot()
+        hf_email = os.getenv("HF_EMAIL")
+        hf_pass = os.getenv("HF_PASS")
+        sign = Login(hf_email, hf_pass)
+        cookies = sign.login()
+        sign.saveCookies()
+        self.llm = hugchat.ChatBot(cookies=cookies.get_dict())
         self.chain = (self.llm | StrOutputParser())
 
     def user(self,user_message, history):

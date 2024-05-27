@@ -2,3 +2,6 @@ __pycache__
 pragetx_chroma
 *.ipynb
 temp*
+.env
+.venv
+venv
