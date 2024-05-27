@@ -6,7 +6,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 loader = TextLoader('./pragetx.md')
 documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=4000, chunk_overlap=4)
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=4)
 docs = text_splitter.split_documents(documents)
 
 embeddings = HuggingFaceEmbeddings()
