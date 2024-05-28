@@ -22,7 +22,7 @@ from utils import HuggingChat
 from langchain_core.prompts import PromptTemplate
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import langchain
-langchain.debug = True
+langchain.debug = False
 
 dotenv.load_dotenv()
 
@@ -31,6 +31,7 @@ class GradioApp:
     def __init__(self):
 
         self.history = []
+        print("init")
         # self.llm = ChatOllama(model="phi3:3.8b", base_url="http://localhost:11434", num_gpu=32)
         
 
