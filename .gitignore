@@ -6,3 +6,5 @@ temp*
 .venv
 venv
 usercookies
+log*
+pragetx_scraper/data
