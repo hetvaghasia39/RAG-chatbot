@@ -1,7 +1,7 @@
 ---
 title: PragetX Chat RAG
 emoji: 🌏
-colorFrom: black
+colorFrom: indigo
 colorTo: purple
 sdk: docker
 pinned: false
