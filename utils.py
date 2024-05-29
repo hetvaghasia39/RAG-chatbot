@@ -56,17 +56,22 @@ class HuggingChat(LLM):
             raise ValueError("email, psw, or cookie_path is required.")
         
         try:
-            if self.email and self.psw:
+            if self.cookie_path:
+                cookies = hugchat.ChatBot(cookie_path=self.cookie_path)
+            elif self.email and self.psw:
                 # Create a ChatBot using email and psw
                 from hugchat.login import Login
                 start_time = time.time()
                 sign = Login(self.email, self.psw)
                 cookies = sign.login()
+                # save cookies to cookie_path
+                if self.cookie_path:
+                    sign.save_cookies(self.cookie_path)
                 end_time = time.time()
                 if self.log : print(f"\n[LOG] Login successfull in {round(end_time - start_time)} seconds")
-            else:
-                # Create a ChatBot using cookie_path
-                cookies = self.cookie_path and hugchat.ChatBot(cookie_path=self.cookie_path)
+            # else:
+            #     # Create a ChatBot using cookie_path
+            #     cookies = self.cookie_path and hugchat.ChatBot(cookie_path=self.cookie_path)
             
             self.chatbot = cookies.get_dict() and hugchat.ChatBot(cookies=cookies.get_dict())
             if self.log : print(f"[LOG] LLM WRAPPER created successfully")
