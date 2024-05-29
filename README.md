@@ -2,6 +2,13 @@
 
 ## Setup
 
+
+```bash
+sudo apt install python3-dev
+sudo apt-get install build-essential -y
+```
+
+
 1. Clone the repository:
     ```bash
     git clone https://github.com/your-username/repo.git
