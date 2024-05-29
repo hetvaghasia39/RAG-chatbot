@@ -1,3 +1,11 @@
+---
+title: PragetX Chat RAG
+emoji: 🌏
+colorFrom: black
+colorTo: purple
+sdk: docker
+pinned: false
+---
 # RAG Chatbot
 
 ## Setup
