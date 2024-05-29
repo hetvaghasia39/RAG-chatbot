@@ -22,7 +22,7 @@ from langchain_community.chat_models import ChatOllama
 # from hugchat import hugchat
 # from langchain.callbacks import SystemMessage
 # from hugchat.login import Login
-langchain.debug = True
+langchain.debug = False
 
 dotenv.load_dotenv()
 
@@ -47,7 +47,7 @@ class GradioApp:
         self.template = """
 You are a helpful AI bot that guides the customer or user through the website content and provides the user with exact details they want.
 You help everyone by answering questions, and improve your answers from previous answers in History.
-Don't try to make up an answer, if you don't know, say you can contact the support team at https://pragetx.com/contact-us/
+Don't try to make up an answer, if you don't know, ask for more detail otherwise say you can contact the support team at https://pragetx.com/contact-us/
 Answer in the same language the question was asked.
 Answer in a way that is easy to understand.
 Try to limit the answer to 3-4 sentences.
