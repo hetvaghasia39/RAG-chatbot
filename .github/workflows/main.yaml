@@ -1,0 +1,34 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH Client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: SSH Command
+        run: |
+          ssh -o StrictHostKeyChecking=no -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'cd infinity_talks/ && git pull https://het-vaghasia:${{ secrets.GIT_TOKEN }}@github.com/hetvaghasia39/infinity_talks.git'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl stop daphne gunicorn; cd infinity_talks/; source .venv/bin/activate; pip install -r requirements.txt; ./manage.py migrate;'
+          ssh -o StrictHostKeyChecking=no -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl restart gunicorn'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl daemon-reload'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl restart gunicorn.socket gunicorn.service'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl restart daphne'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo nginx -t && sudo systemctl restart nginx'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl status gunicorn'
+          ssh -i /tmp/deploy-key.pem ubuntu@3.6.59.40 'sudo systemctl status daphne'

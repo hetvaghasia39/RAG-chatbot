@@ -1,6 +1,21 @@
+---
+title: PragetX Chat RAG
+emoji: 🌏
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+pinned: false
+---
 # RAG Chatbot
 
 ## Setup
+
+
+```bash
+sudo apt install python3-dev
+sudo apt-get install build-essential -y
+```
+
 
 1. Clone the repository:
     ```bash

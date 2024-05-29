@@ -1,0 +1,12 @@
+__pycache__
+pragetx_chroma
+*.ipynb
+temp*
+.env
+.venv
+venv
+usercookies
+log*
+pragetx_scraper/data
+Dockerfile
+.dockerignore
