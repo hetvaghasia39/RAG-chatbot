@@ -51,7 +51,7 @@ Don't try to make up an answer, if you don't know, say you can contact the suppo
 Answer in the same language the question was asked.
 Answer in a way that is easy to understand.
 Try to limit the answer to 3-4 sentences.
-Provide source url as well at the end of the answer if possible.
+Provide source url as well at the end of the answer.
 Do not say "Based on the information you provided, ..." or "I think the answer is...". Just answer the question directly in detail.
 
 History: {chat_history}
@@ -67,7 +67,7 @@ Answer:
         )
         self.db = Chroma(persist_directory="./pragetx_chroma", embedding_function=HuggingFaceEmbeddings(), collection_name="pragetx")  
         # self.llm = ChatOllama(model="phi3:3.8b", base_url="http://localhost:11434", num_gpu=16)
-        self.llm = HuggingChat(email = os.getenv("HF_EMAIL") , psw = os.getenv("HF_PASS") , cookie_path="./usercookies")
+        self.llm = HuggingChat(email = os.getenv("HF_EMAIL") , psw = os.getenv("HF_PASS") )
         self.chain = (
             {"chat_history": self.chat_history, "context": self.db.as_retriever(search_kwargs={"k":3}), "question": RunnablePassthrough()} |
             self.prompt |
